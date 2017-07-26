@@ -110,6 +110,15 @@ class Kohana_URL {
 					);
 				}
 			}
+			
+			// Does something about mixed content errors that can occur with http active resources 
+			//in a https request This becomes a problem when converting http site to https. May want
+			//to simply log this and not change it. 
+			if($protocol == 'http' and Request::$initial->secure())
+                        {
+                        	$protocol = 'https';
+                        }
+			
 
 			// Add the protocol and domain to the base URL
 			$base_url = $protocol.'://'.$host.$port.$base_url;
